@@ -6,7 +6,9 @@ export { FillMode };
 export class StarRating extends StarRatingBase {
 	emptyBorderColor: string | Color;
 	filledBorderColor: string | Color;
-	nativeView: android.widget.LinearLayout;
+	get nativeView(): android.widget.LinearLayout {
+		return super.nativeView;
+	}
 	private _ratingBar: android.widget.RatingBar;
 	private _stars: android.graphics.drawable.LayerDrawable;
 	private _filledColor = 'blue';

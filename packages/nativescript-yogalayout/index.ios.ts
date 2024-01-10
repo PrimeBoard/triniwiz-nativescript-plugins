@@ -13,7 +13,9 @@ declare class NSYogaView extends UIView {
 
 @CSSType('View')
 export class View extends ViewBase {
-	nativeView: NSYogaView;
+	get nativeView(): NSYogaView {
+		return super.nativeView as NSYogaView;
+	}
 	_children: NSView[] = [];
 
 	constructor() {
@@ -107,8 +109,8 @@ export class View extends ViewBase {
 			View.layoutChild(this, childView, left, top, right, bottom);
 		});
 		this.nativeView.yoga.applyLayoutPreservingOriginDimensionFlexibility(true, YGDimensionFlexibility.FlexibleHeight);
-		if(this.nativeView.superview instanceof UIScrollView){
-			 this.nativeView.superview.contentSize = CGSizeMake(this.nativeView.frame.size.width, this.nativeView.frame.size.height);
+		if (this.nativeView.superview instanceof UIScrollView) {
+			this.nativeView.superview.contentSize = CGSizeMake(this.nativeView.frame.size.width, this.nativeView.frame.size.height);
 			this.requestLayout();
 		}
 	}
@@ -255,12 +257,12 @@ export class View extends ViewBase {
 
 
 	// @ts-ignore
-	set overflow(value){
+	set overflow(value) {
 		this.style.overflow = value;
 		this._updateOverflow(value);
 	}
 
-	get overflow(){
+	get overflow() {
 		return this.style.overflow;
 	}
 
@@ -342,30 +344,30 @@ export class View extends ViewBase {
 	}
 
 	// @ts-ignore
-	get flexGrow(){
+	get flexGrow() {
 		return this.style.flexGrow;
 	}
 
-	set flexGrow(value){
+	set flexGrow(value) {
 		this.style.flexGrow = value;
 		this._updateFlexGrow(value);
 	}
 
 	// @ts-ignore
-	get flexShrink(){
+	get flexShrink() {
 		return this.style.flexShrink;
 	}
 
-	set flexShrink(value){
+	set flexShrink(value) {
 		this.style.flexShrink = value;
 		this._updateFlexShrink(value);
 	}
 
-	get flexBasis(){
+	get flexBasis() {
 		return this.style.flexBasis;
 	}
 
-	set flexBasis(value){
+	set flexBasis(value) {
 		this.style.flexBasis = value;
 		this._updateFlexBasis(value);
 	}

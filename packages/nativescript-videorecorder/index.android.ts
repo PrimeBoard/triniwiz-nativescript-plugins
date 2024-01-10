@@ -129,7 +129,7 @@ export class VideoRecorder extends VideoRecorderBase {
 
 							const uri = Utils.android.getApplicationContext().getContentResolver().insert(android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
 
-							const fos: java.io.FileOutputStream = Utils.android.getApplicationContext().getContentResolver().openOutputStream(uri);
+							const fos: java.io.OutputStream = Utils.android.getApplicationContext().getContentResolver().openOutputStream(uri);
 
 							const fis = new java.io.FileInputStream(nativeFile);
 							try {

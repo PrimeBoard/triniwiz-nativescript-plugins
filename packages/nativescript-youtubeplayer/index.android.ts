@@ -96,7 +96,7 @@ function initWebChromeClient() {
 
 				this.#videoView.setBackgroundColor(android.graphics.Color.BLACK);
 				const rootView = activity.findViewById(android.R.id.content);
-				rootView.addView(this.#videoView, new android.widget.FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.Gravity.CENTER));
+				(rootView as any).addview.addView(this.#videoView, new android.widget.FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.Gravity.CENTER));
 				this.#webView.setVisibility(android.view.View.GONE);
 			}
 
@@ -111,7 +111,7 @@ function initWebChromeClient() {
 				const activity = Application.android.foregroundActivity || Application.android.startActivity;
 				const rootView = activity.findViewById(android.R.id.content);
 				this.#videoView.setVisibility(android.view.View.GONE);
-				rootView.removeView(this.#videoView);
+				(rootView as any).removeView(this.#videoView);
 				this.#callback.onCustomViewHidden();
 
 				this.#videoView = null;

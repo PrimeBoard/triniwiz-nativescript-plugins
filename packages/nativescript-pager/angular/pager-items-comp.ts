@@ -20,7 +20,6 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  ɵisListLikeIterable as isListLikeIterable,
 } from "@angular/core";
 import { isIOS, KeyedTemplate, View } from "@nativescript/core";
 import { EventData, LayoutBase, Template, Trace, profile, ObservableArray, ItemEventData,ItemsSource } from "@nativescript/core";
@@ -28,6 +27,7 @@ import { EventData, LayoutBase, Template, Trace, profile, ObservableArray, ItemE
 import {
   getSingleViewRecursive,
   isInvisibleNode,
+  isJsObject,
   registerElement,
 } from "@nativescript/angular";
 
@@ -42,6 +42,11 @@ registerElement("Pager", () => Pager);
 registerElement("PagerItem", () => PagerItem);
 
 const NG_VIEW = "_ngViewRef";
+
+export function isListLikeIterable(obj) {
+	if (!isJsObject(obj)) return false;
+	return Array.isArray(obj) || (!(obj instanceof Map) && Symbol.iterator in obj);
+}
 
 export interface PagerTemplatedItemsView {
   items: any[] | ItemsSource;
