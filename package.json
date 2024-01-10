@@ -32,7 +32,7 @@
 		"@nativescript/angular": "^15.0.0",
 		"@nativescript/core": "~8.5.0",
 		"@nativescript/plugin-tools": "5.1.0",
-		"@nativescript/types": "~8.4.0",
+		"@nativescript/types": "~8.5.0",
 		"@nativescript/webpack": "~5.0.5",
 		"@nestjs/common": "^9.0.0",
 		"@nestjs/core": "^9.0.0",
