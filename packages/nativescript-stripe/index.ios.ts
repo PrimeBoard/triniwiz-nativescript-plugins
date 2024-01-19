@@ -601,7 +601,9 @@ class STPPaymentCardTextFieldDelegateImpl extends NSObject implements STPPayment
 }
 
 export class CreditCardView extends CreditCardViewBase {
-	nativeView: STPPaymentCardTextField;
+	get nativeView(): STPPaymentCardTextField {
+		return super.nativeView;
+	}
 	private delegate: STPPaymentCardTextFieldDelegateImpl;
 
 	public createNativeView(): STPPaymentCardTextField {
@@ -829,7 +831,7 @@ class StripeIntent {
 
 export class StripePaymentIntent extends StripeIntent implements IStripePaymentIntent {
 	// @ts-ignore
-  native: STPPaymentIntent;
+	native: STPPaymentIntent;
 
 	static fromNative(native: STPPaymentIntent): StripePaymentIntent {
 		const pi = new StripePaymentIntent();
@@ -948,35 +950,35 @@ export class StripeRedirectSession {
 
 @NativeClass()
 class CustomUIApplicationDelegate extends UIResponder implements UIApplicationDelegate {
-    public static ObjCProtocols = [UIApplicationDelegate];
+	public static ObjCProtocols = [UIApplicationDelegate];
 }
 
 // setup app delegate
 let delegate = Application.ios.delegate;
 if (!delegate) {
-    delegate = Application.ios.delegate = CustomUIApplicationDelegate;
+	delegate = Application.ios.delegate = CustomUIApplicationDelegate as any;
 }
 
 /**
  * Add delegate method handler, but also preserve any existing one.
  */
-function addDelegateHandler(classRef: Function, methodName: string, handler: Function) {
-    const crtHandler = classRef.prototype[methodName];
-    classRef.prototype[methodName] = function () {
-        const args = Array.from(arguments);
-        if (crtHandler) {
-            const result = crtHandler.apply(this, args);
-            args.push(result);
-        }
+function addDelegateHandler(classRef: any, methodName: string, handler: any) {
+	const crtHandler = classRef.prototype[methodName];
+	classRef.prototype[methodName] = function (...funcArgs) {
+		const args = Array.from(funcArgs);
+		if (crtHandler) {
+			const result = crtHandler.apply(this, args);
+			args.push(result);
+		}
 
-        return handler.apply(this, args);
-    };
+		return handler.apply(this, args);
+	};
 }
 
 addDelegateHandler(delegate, 'applicationContinueUserActivityRestorationHandler', (_application: UIApplication, userActivity: NSUserActivity) => {
-    return handleContinueUserActivity(userActivity);
+	return handleContinueUserActivity(userActivity);
 });
 
 addDelegateHandler(delegate, 'applicationOpenURLOptions', (_app, url, _options) => {
-    return handleOpenURL(url);
+	return handleOpenURL(url);
 });
