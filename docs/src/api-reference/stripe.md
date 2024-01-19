@@ -163,6 +163,28 @@ let paymentSession = new StripeStandardPaymentSession(page, customerSession, pri
 
 See [Stripe Docs](httpsope will require [Strong Customer Authentication](https://stripe.com/payments/strong-customer-authent://stripe.com/docs/mobile) for more information.
 
+## Payment Sheet Integration
+This is covered in the angular-demo directory by example. 
+
+Important notes:
+- `init(apiKey)` must be called <u>**from app.ts/main.ts**</u> - due to how Stripe's native SDK for Android is written, it requires to be initialised as part of Android app's `Activity`.
+
+### Note for advanced users:
+While in a fully native application, there would be an Activity per page, in case of NativeScript, only one Activity is launched - and the only way to run something like this in it is by calling `init()` early enough, before the Activity is started.
+
+Alternative way *could* be to launch another Activity, and this has been attempted - however this means a full-window/screen activity will be rendered, which is very likely not the UX you would like. 
+
+If you're feeling brave to make it work better via custom activity - please check NS docs on "Custom android activity" - start out by using the example one, and in onCreate, call `init` of this plugin. To navigate to this custom Activity, you can use the following:
+***FOR MOST USERS: UNLESS YOU ARE TRYING SOMETHING CUSTOM AND BETTER, you do not need the below!***
+```ts
+import { PaymentSheetActivity } from './paymentSheet/paymentSheetActivity.android';
+
+const ctx = Utils.android.getApplicationContext();
+const intent = new android.content.Intent(ctx, PaymentSheetActivity.class);
+intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+ctx.startActivity(intent);
+```
+
 # Strong Customer Authentication
 
 PSD2 regulations in Eurication)
