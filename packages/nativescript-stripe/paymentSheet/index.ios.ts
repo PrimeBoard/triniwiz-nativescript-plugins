@@ -1,12 +1,12 @@
-import { Color, Frame } from "@nativescript/core";
+import { Color, Frame, getRootLayout } from "@nativescript/core";
 import { Configuration } from ".";
 declare const TNSStripe;
 export class PaymentSheet {
-
-    static _init(context) { }
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	static _init(context) {}
 
     static #getConfig(config?: Configuration) {
-        let cfg = config || null;
+		const cfg = config || null;
 
         if (cfg.primaryButtonColor) {
             if (cfg.primaryButtonColor instanceof Color) {
@@ -25,23 +25,24 @@ export class PaymentSheet {
 
             TNSStripe.presentWithSetupIntent(setupIntent, this.#getConfig(config), rootVC, (status, error) => {
                 switch (status) {
-                    case "completed":
+					case 'completed':
                         resolve();
                         break;
-                    case "cancelled":
-                        reject(new Error('cancelled'))
+					case 'cancelled':
+						reject(new Error('cancelled'));
                         break;
-                    case "error":
+					case 'error':
+						// eslint-disable-next-line no-case-declarations
                         const err = new Error(error.localizedDescription);
                         (err as any).native = error;
-                        reject(err)
+						reject(err);
                         break;
                     default:
                         reject(new Error('unknown'));
                         break;
                 }
             });
-        })
+		});
     }
 
     static presentWithPaymentIntent(paymentIntent: string, config?: Configuration) {
@@ -49,25 +50,25 @@ export class PaymentSheet {
             const rootVC = this.findTopViewController(Frame.topmost().currentPage.ios) || this._rootViewController;
             TNSStripe.presentWithPaymentIntent(paymentIntent, this.#getConfig(config), rootVC, (status, error) => {
                 switch (status) {
-                    case "completed":
+					case 'completed':
                         resolve();
                         break;
-                    case "cancelled":
-                        reject(new Error('cancelled'))
+					case 'cancelled':
+						reject(new Error('cancelled'));
                         break;
-                    case "error":
+					case 'error':
+						// eslint-disable-next-line no-case-declarations
                         const err = new Error(error.localizedDescription);
                         (err as any).native = error;
-                        reject(err)
+						reject(err);
                         break;
                     default:
                         reject(new Error('unknown'));
                         break;
                 }
             });
-        })
+		});
     }
-
 
     private static get _rootViewController(): UIViewController | undefined {
         const keyWindow = UIApplication.sharedApplication.keyWindow;
