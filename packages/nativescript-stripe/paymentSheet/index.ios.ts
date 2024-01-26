@@ -76,6 +76,10 @@ export class PaymentSheet {
     }
 
     private static findTopViewController(root: UIViewController): UIViewController | undefined {
+		const rootLayout = getRootLayout();
+		if (rootLayout && rootLayout.viewController) {
+			return rootLayout.viewController;
+		}
         const presented = root.presentedViewController;
         if (presented != null) {
             return this.findTopViewController(presented);
