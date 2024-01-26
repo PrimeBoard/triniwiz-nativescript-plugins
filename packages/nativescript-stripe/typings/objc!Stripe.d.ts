@@ -2160,6 +2160,10 @@ declare class STPAUBECSDebitFormView extends STPMultiFormTextField implements UI
 
 	textViewEditMenuForTextInRangeSuggestedActions(textView: UITextView, range: NSRange, suggestedActions: NSArray<UIMenuElement> | UIMenuElement[]): UIMenu;
 
+	textViewMenuConfigurationForTextItemDefaultMenu(textView: UITextView, textItem: UITextItem, defaultMenu: UIMenu): UITextItemMenuConfiguration;
+
+	textViewPrimaryActionForTextItemDefaultAction(textView: UITextView, textItem: UITextItem, defaultAction: UIAction): UIAction;
+
 	textViewShouldBeginEditing(textView: UITextView): boolean;
 
 	textViewShouldChangeTextInRangeReplacementText(textView: UITextView, range: NSRange, text: string): boolean;
@@ -2173,6 +2177,10 @@ declare class STPAUBECSDebitFormView extends STPMultiFormTextField implements UI
 	textViewShouldInteractWithURLInRange(textView: UITextView, URL: NSURL, characterRange: NSRange): boolean;
 
 	textViewShouldInteractWithURLInRangeInteraction(textView: UITextView, URL: NSURL, characterRange: NSRange, interaction: UITextItemInteraction): boolean;
+
+	textViewTextItemMenuWillDisplayForTextItemAnimator(textView: UITextView, textItem: UITextItem, animator: UIContextMenuInteractionAnimating): void;
+
+	textViewTextItemMenuWillEndForTextItemAnimator(textView: UITextView, textItem: UITextItem, animator: UIContextMenuInteractionAnimating): void;
 
 	textViewWillDismissEditMenuWithAnimator(textView: UITextView, animator: UIEditMenuInteractionAnimating): void;
 
@@ -5543,6 +5551,8 @@ declare class STPPaymentCardTextField extends UIControl implements UIKeyInput {
 	readonly hasText: boolean; // inherited from UIKeyInput
 
 	readonly hash: number; // inherited from NSObjectProtocol
+
+	inlinePredictionType: UITextInlinePredictionType; // inherited from UITextInputTraits
 
 	readonly isProxy: boolean; // inherited from NSObjectProtocol
 
